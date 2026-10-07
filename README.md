@@ -50,6 +50,14 @@ Newest first. Each entry is one try. A number is a reading from that window.
 
 **Why.** One sender's submit queue held the rate near 1,650. Three queues on one node are the next measurement. If the node can validate them, the included rate should add. If the node is the cap, each sender will slow down and the total will stay near 1,650.
 
+**Result.** The first 15 seconds added to about 2,450 included a second. The next half minute fell to about 1,845, near 610 on each sender. A block sample in that window was full: compute mass 499,744 of 500,000, about 550 transactions in the block. Public pools were about 23,000 to 28,000. The fee on the hop was still 150 sompi per gram. Other traffic pays more than that, so a full block gives this hop a smaller share. Three queues raised the rate while the block had room, and lost the gain when the block filled.
+
+### 2026-10-07 14:48Z — same three queues, fee 1,600
+
+**What.** Same three lane ranges. Fee fixed at 1,600 sompi per gram, under the sender cap of 2,000, and above the 400/600 traffic already on the public nodes.
+
+**Why.** A 643 gram hop only passes 3,500 if it wins mass inside a full block. At 150 it did not. 3,500 of these hops are about 225,000 grams of a 500,000 gram block.
+
 **Result.** Not written yet.
 
 ### 2026-10-07 14:26Z — four signed senders, stopped at a public pool of 80,228

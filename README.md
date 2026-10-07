@@ -58,6 +58,14 @@ Newest first. Each entry is one try. A number is a reading from that window.
 
 **Why.** A 643 gram hop only passes 3,500 if it wins mass inside a full block. At 150 it did not. 3,500 of these hops are about 225,000 grams of a 500,000 gram block.
 
+**Result.** Fee on the arm was 1,600. Over the first measured minute the three senders included 956, 995, and 1,000 a second. Together that is 2,951. Orphans were 0. Ratio was about 0.99. Median inclusion lag was about 0.8 seconds. Each sender had one socket, not four: the extra sockets open only when a sender scans more than 2,000 lanes, and these ranges are shorter. A fourth sender on a fresh range then joined. A 23 second overlap read about 3,344 included a second, and the local pool was about 15,000. The next full minute was about 2,500. By 14:52Z the lanes had started to die and the four together were near 850, while the local pool fell by about 10,000. Public pools stayed near 16,000 to 20,000. The 2,951 minute is the best included reading of this shape so far. It is not over 3,500. The fourth sender raised the short overlap and then the set stalled.
+
+### 2026-10-07 14:55Z — four senders started together, fee 1,600, one socket each
+
+**What.** Stop the stalled set. Start four non-overlapping ranges at the same time. Fee 1,600. One socket each. A lane now waits 90 seconds before it gives up, so a slow minute does not delete it.
+
+**Why.** The 2,951 minute was three fresh senders. The fourth joined late, the local pool rose, and lanes then died. This try asks whether four fresh senders can add before that stall.
+
 **Result.** Not written yet.
 
 ### 2026-10-07 14:26Z — four signed senders, stopped at a public pool of 80,228

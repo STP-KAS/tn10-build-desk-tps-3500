@@ -36,6 +36,14 @@ It will not spend coins a live signer is already using. It will not start a seco
 
 Newest first. Each entry is one try. A number is a reading from that window.
 
+### 2026-10-07 15:43 UTC — a wider pipe, then the submit call slowed down
+
+**What.** One sender on about 4,095 lanes, depth 8, 256 submits in flight. Then the same 1,365-lane range that had just included 1,636, still depth 8, with 256 in flight instead of 128. Then three senders at depth 4 and 128 in flight, started together. Then one depth-8 sender again, after the others were stopped and the node had a short rest.
+
+**Why.** 1,636 on one socket matched about 128 submits in flight at about 80 ms each. More lanes, more in-flight submits, or a middle depth on three sockets was the try to move that number to 3,500.
+
+**Result.** About 4,095 lanes at 256 in flight included 213 a second. The median submit was 1,144 ms. The 1,365-lane range at 256 in flight included 859, with a median submit of 290 ms. That is worse than the same range at 128 in flight. Three depth-4 senders included 228, 191, and 181. Together about 600. The median submit was about 530 to 630 ms. One of them, left running alone, stayed near 250. After a short rest, one depth-8 sender included 144, with a median submit of 583 ms. Orphans were 0. The local pool was a few hundred to about 2,000. A block in that slow stretch carried about 86,000 compute grams of 500,000, so the grams were free. The submit call had moved from about 80 ms to about 500 to 1,100 ms. The desk node was also revalidating a few hundred high-priority transactions and logging blocks orphaned and then accepted again. 3,500 was not reached. These senders were stopped.
+
 ### 2026-10-07 15:36 UTC — depth 8, one sender
 
 **What.** One sender, 1,365 lanes, fee 1,600, one submit socket. A lane may keep eight hops in flight instead of two. The chain stream stays on its own socket.
@@ -128,9 +136,9 @@ Newest first. Each entry is one try. A number is a reading from that window.
 
 ## Where it stands
 
-The best included minute on this page is 2,951, from three depth-2 senders. The best single socket is 1,636, from one depth-8 sender, still at 1,413 and 1,343 in the next two minutes. A second depth-8 sender did not add. Three depth-2 sockets included 2,753. Four senders, extra local sockets, and a public submit path all came in lower. A signed payment cannot be included above about 3,078 at all. 3,500 has not been read.
+The best included minute on this page is 2,951, from three depth-2 senders. The best single socket is 1,636, from one depth-8 sender, still at 1,413 and 1,343 in the next two minutes. A second depth-8 sender did not add. Raising that socket from 128 in-flight submits to 256 dropped it to 859. Three depth-4 senders together included about 600. After that, one depth-8 sender included 144, and the submit call sat near 580 ms. Three depth-2 sockets with the chain stream on its own socket included 2,753 before the node slowed. A signed payment cannot be included above about 3,078 at all. 3,500 has not been read.
 
-3,500 of these hops would be about 225,000 grams of a 500,000 gram block. At 15:16 UTC the block was using about 162,000 of 500,000, so grams were free and the included rate was still far under 3,500. Depth 2 tops a socket out near 1,000 included a second, and three of those reached 2,951 once. Depth 8 raised one socket to 1,636 and the submit time sat near 80 ms, which is 128 in-flight submits at that pace. A wider in-flight window on that deep shape is the next measurement. The node was on about one to two cores, so the machine was not out of CPU.
+3,500 of these hops would be about 225,000 grams of a 500,000 gram block. At 15:16 UTC the block was using about 162,000 of 500,000. In the slow stretch near 15:47 UTC a block was using about 86,000. Grams were free both times. Depth 2 tops a healthy socket near 1,000 included a second, and three of those reached 2,951 once. Depth 8 raised one healthy socket to 1,636, with the submit call near 80 ms. The same shape later submitted in about 580 ms and included 144. The missing piece is a submit call that stays near 80 ms or below while more than one deep socket is running. A wider in-flight window made the call slower. The node was on about one to two cores, so the machine was not out of CPU.
 
 ### 2026-10-07 14:26 UTC — four signed senders, stopped at a public pool of 80,228
 

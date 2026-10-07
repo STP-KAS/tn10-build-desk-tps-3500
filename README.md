@@ -36,6 +36,30 @@ It will not spend coins a live signer is already using. It will not start a seco
 
 Newest first. Each entry is one try. A number is a reading from that window.
 
+### 2026-10-07 15:36 UTC — depth 8, one sender
+
+**What.** One sender, 1,365 lanes, fee 1,600, one submit socket. A lane may keep eight hops in flight instead of two. The chain stream stays on its own socket.
+
+**Why.** At depth 2 a lane submits one hop and then waits out the inclusion notice. The measured wait was about 0.3 to 0.8 seconds, and a socket topped out near 1,000 included a second. Eight in flight lets the next hops sit in the pool while the notice is still on the way, so a block can take more than one hop from the same lane before the sender hears about the first.
+
+**Result.** The measured minute included 1,636 a second. Submitted 1,641. Ratio 0.997. Orphans 0. No lane died. Median lag was 0 ms, so the hop was already in the virtual chain by the time the sender checked. Median submit was 76 ms and the tail was 84 ms. The local pool stayed near 1,500 to 1,800. The next two minutes were 1,413 and 1,343. A second sender at the same depth, on another 1,365 lanes, included 490 in its minute, with a submit time of about 270 ms. The first sender was at 1,343 in that same stretch, and about 1,140 in the short window after the second sender was stopped. Two deep senders did not add. 1,636 is the best single socket on this page. It is not over 3,500.
+
+### 2026-10-07 15:27 UTC — submit on the three public machines, chain notice stays local
+
+**What.** Three senders. Each submits only to one of the three public machines. The desk node only listens for the virtual chain. Fee 1,600. Depth 2.
+
+**Why.** The desk node was the insert path for every hop that reached 2,951. A public machine has its own pool. Three machines could insert at once if the block still has grams.
+
+**Result.** Two machines included 907 and 925 in the first minute. Median lag was 0.2 and 0.3 seconds. Median submit was 117 ms and 48 ms. Orphans 0. The third machine included 16 a second, with 358 orphans and a median submit of 782 ms. It was stopped. The two that worked did 840 and 959 in the next minute, then 519 and 727. A local sender added beside them, on a range this round had barely touched, included 1,068 with a 12 ms submit. An older range resumed 1,365 lanes and submitted none: the coins were still over the keep-alive floor, and under that floor plus one hop fee, so the hop refused. The set did not add up to the local-only minutes. Not over 3,500.
+
+### 2026-10-07 15:35 UTC — two more local sockets beside a sender that was already at 1,068
+
+**What.** Keep the local sender that had just included 1,068. Start two neighboring ranges on the desk node, same fee, depth 2, one socket each.
+
+**Why.** 1,068 on one socket is above the earlier 950. Two more at that pace would clear 3,500. Adding them after the first is in its hold is the shape that once overlapped near 3,344 for 23 seconds.
+
+**Result.** The two new minutes included 382 and 421. Median submit was about 350 ms. The sender that had been at 1,068 fell to about 540. Together about 1,330. The node answered slowly as soon as the extra sockets arrived. Not over 3,500.
+
 ### 2026-10-07 15:24 UTC — a fourth sender with 256 submits in flight
 
 **What.** Leave the three senders from the 15:19 UTC minute running. Add a fourth range, fee 1,600, one submit socket, 256 submits allowed in flight instead of 128.
@@ -104,9 +128,9 @@ Newest first. Each entry is one try. A number is a reading from that window.
 
 ## Where it stands
 
-The best included minute on this page is 2,951. Three senders, one socket each on the desk node, fee 1,600, 643 gram hops, orphans 0, for about one minute. Started again at 15:01 UTC, that shape included 2,627 and then one socket went quiet. With the chain stream on its own socket, three fresh ranges included 2,753 and all three stayed healthy. A fourth sender at 256 in-flight submits included 539 and pulled the other three down, and the four together were about 980. Four senders at once, earlier, fell to 1,337. Two local sockets on each sender fell to 888. A signed payment cannot be included above about 3,078 at all.
+The best included minute on this page is 2,951, from three depth-2 senders. The best single socket is 1,636, from one depth-8 sender, still at 1,413 and 1,343 in the next two minutes. A second depth-8 sender did not add. Three depth-2 sockets included 2,753. Four senders, extra local sockets, and a public submit path all came in lower. A signed payment cannot be included above about 3,078 at all. 3,500 has not been read.
 
-3,500 of these hops would be about 225,000 grams of a 500,000 gram block. At 15:16 UTC the block was using about 162,000 of 500,000, so grams were free and the included rate was still far under 3,500. The missing piece is a submit path that stays up. One socket delivered about 1,000 included a second while it was healthy. Three sockets delivered about 3,000 for a minute. A fourth full sender made every socket slower. A socket that shares its connection with the virtual-chain stream can go silent with no reject line. The node was on about one to two cores, so the machine was not out of CPU.
+3,500 of these hops would be about 225,000 grams of a 500,000 gram block. At 15:16 UTC the block was using about 162,000 of 500,000, so grams were free and the included rate was still far under 3,500. Depth 2 tops a socket out near 1,000 included a second, and three of those reached 2,951 once. Depth 8 raised one socket to 1,636 and the submit time sat near 80 ms, which is 128 in-flight submits at that pace. A wider in-flight window on that deep shape is the next measurement. The node was on about one to two cores, so the machine was not out of CPU.
 
 ### 2026-10-07 14:26 UTC — four signed senders, stopped at a public pool of 80,228
 

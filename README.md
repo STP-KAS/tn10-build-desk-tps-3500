@@ -36,6 +36,14 @@ It will not spend coins a live signer is already using. It will not start a seco
 
 Newest first. Each entry is one try. A number is a reading from that window.
 
+### 2026-10-07 16:16 UTC — the same depth-8 socket, stopped when the node fell behind
+
+**What.** One sender, the same shape as the 1,636 minute: depth 8, 1,365 lanes, 128 submits in flight, one local socket, fee 1,600. The node had taken no local submits for about two and a half hours.
+
+**Why.** That shape is the fastest single socket on this page, and only while the submit call stays near 80 ms. This try checked whether that call had come back.
+
+**Result.** Stopped at about 16 seconds. It is not a measured minute. In the first 10 seconds it submitted 4,163 and counted 2,539 included, about 416 submitted a second and 254 included. Across the 16 seconds the submit rate stayed near 400 to 500 a second. Inclusion was still catching up when the sender stopped. The local pool moved from 1 to about 3,800. In the same window the node recorded about 406 RPC inserts a second, a block at about 481,000 compute grams of 500,000, and then initial block download. RPC inserts went back to 0 after the stop. Orphans were not scored. 3,500 was not read.
+
 ### 2026-10-07 15:43 UTC — a wider pipe, then the submit call slowed down
 
 **What.** One sender on about 4,095 lanes, depth 8, 256 submits in flight. Then the same 1,365-lane range that had just included 1,636, still depth 8, with 256 in flight instead of 128. Then three senders at depth 4 and 128 in flight, started together. Then one depth-8 sender again, after the others were stopped and the node had a short rest.
@@ -136,7 +144,7 @@ Newest first. Each entry is one try. A number is a reading from that window.
 
 ## Where it stands
 
-The best included minute on this page is 2,951, from three depth-2 senders. The best single socket is 1,636, from one depth-8 sender, still at 1,413 and 1,343 in the next two minutes. A second depth-8 sender did not add. Raising that socket from 128 in-flight submits to 256 dropped it to 859. Three depth-4 senders together included about 600. After that, one depth-8 sender included 144, and the submit call sat near 580 ms. Three depth-2 sockets with the chain stream on its own socket included 2,753 before the node slowed. A signed payment cannot be included above about 3,078 at all. 3,500 has not been read.
+The best included minute on this page is 2,951, from three depth-2 senders. The best single socket is 1,636, from one depth-8 sender, still at 1,413 and 1,343 in the next two minutes. A second depth-8 sender did not add. Raising that socket from 128 in-flight submits to 256 dropped it to 859. Three depth-4 senders together included about 600. After that, one depth-8 sender included 144, and the submit call sat near 580 ms. Three depth-2 sockets with the chain stream on its own socket included 2,753 before the node slowed. A signed payment cannot be included above about 3,078 at all. At 16:16 UTC the same depth-8 socket was tried again and stopped after about 16 seconds. Submit stayed near 400 to 500 a second, the block was near the mass ceiling, and the node logged initial block download. 3,500 has not been read.
 
 3,500 of these hops would be about 225,000 grams of a 500,000 gram block. At 15:16 UTC the block was using about 162,000 of 500,000. In the slow stretch near 15:47 UTC a block was using about 86,000. Grams were free both times. Depth 2 tops a healthy socket near 1,000 included a second, and three of those reached 2,951 once. Depth 8 raised one healthy socket to 1,636, with the submit call near 80 ms. The same shape later submitted in about 580 ms and included 144. The missing piece is a submit call that stays near 80 ms or below while more than one deep socket is running. A wider in-flight window made the call slower. The node was on about one to two cores, so the machine was not out of CPU.
 

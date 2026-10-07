@@ -6,11 +6,13 @@
 
 # Desk try for 3500 included transactions a second
 
+Kaspa Testnet-10 only. Every clock on this page is UTC.
+
 ## What
 
 The bar on this page is an included rate well over 3,500 transactions a second on Testnet-10. Included means the sender saw the transaction in the virtual chain. A submit acknowledgement is a different number. This page is not the 9 Oct or 13 Oct storm, and it does not move that storm's fee.
 
-The long included hold in [tn10-build-desk-tps](https://github.com/STP-KAS/tn10-build-desk-tps) is 2,207 seen-accepted transactions a second for 6 hours 1 minute, from 2026-10-06T23:53:27Z to 2026-10-07T05:54:53Z, at fee 200/300. The published 6,321 is submit-OK for 20 seconds. Seen-accepted in that same window is about 1,900 a second.
+The long included hold in [tn10-build-desk-tps](https://github.com/STP-KAS/tn10-build-desk-tps) is 2,207 seen-accepted transactions a second for 6 hours 1 minute, from 2026-10-06T23:53:27 UTC to 2026-10-07T05:54:53 UTC, at fee 200/300. The published 6,321 is submit-OK for 20 seconds. Seen-accepted in that same window is about 1,900 a second.
 
 ## Why a signed payment stops near 3,080
 
@@ -18,7 +20,7 @@ rusty-kaspa v2.1.0 gives each block 500,000 compute mass. Live Testnet-10 aims a
 
 500,000 / 1,624 is about 308 of those payments in one block. At 10 blocks a second that shape is about 3,078 included transactions a second. A worker, a miner, a second RPC name, or a higher fee does not add grams. The same reading is in [what-limits-tx-rate](https://github.com/STP-KAS/what-limits-tx-rate).
 
-On 7 Oct 2026 the desk node was already taking full blocks of that shape: about 304 to 307 transactions, compute mass about 497,000 of 500,000, near 3,050 to 3,070 a second for the network. This desk's own seen-accepted share of those blocks stayed about 1,400 to 2,222.
+On 7 Oct 2026 UTC the desk node was already taking full blocks of that shape: about 304 to 307 transactions, compute mass about 497,000 of 500,000, near 3,050 to 3,070 a second for the network. This desk's own seen-accepted share of those blocks stayed about 1,400 to 2,222.
 
 ## Why a lighter hop can pass 3,500
 
@@ -34,31 +36,31 @@ It will not spend coins a live signer is already using. It will not start a seco
 
 Newest first. Each entry is one try. A number is a reading from that window.
 
-### 2026-10-07 15:24Z — a fourth sender with 256 submits in flight
+### 2026-10-07 15:24 UTC — a fourth sender with 256 submits in flight
 
-**What.** Leave the three senders from the 15:19Z minute running. Add a fourth range, fee 1,600, one submit socket, 256 submits allowed in flight instead of 128.
+**What.** Leave the three senders from the 15:19 UTC minute running. Add a fourth range, fee 1,600, one submit socket, 256 submits allowed in flight instead of 128.
 
 **Why.** Each healthy socket was including about 900 a second with a submit call of about 11 to 21 ms at the median and about 245 ms at the tail. 128 in flight at a tenth of a second is about 1,000 a second, which matches the reading. A wider in-flight window on one more sender was the try for the missing 500.
 
 **Result.** The fourth sender's measured minute included 539 a second. Median submit was 19 ms. Median lag was 0.8 seconds. Orphans were 0. While it ran, the original three fell to about 340, 180, and 240. A few seconds later the four together were about 980. The fourth was stopped. The three did not climb back; they stayed near 300 each, and the local pool stayed near 9,700. 256 in flight did not raise a sender, and a fourth full sender crowded the set again. Not over 3,500.
 
-### 2026-10-07 15:19Z — chain updates on their own socket
+### 2026-10-07 15:19 UTC — chain updates on their own socket
 
 **What.** Three fresh ranges that this session had not hopped. Fee 1,600. Depth 2. The virtual-chain stream sits on its own socket. Submits sit on a second socket, one per sender. A submit that does not return in 4 seconds is treated as a dead socket and the sender reconnects.
 
-**Why.** At 15:13Z a sender went to 0 included while every lane still counted as live, and the log had no reject. That fits one socket blocked on the chain stream, so submits never return. A separate submit socket, plus a timeout, is the test. The block at the arm was nearly empty, about 51 in the local pool, so a short inclusion wait would also have room to show up.
+**Why.** At 15:13 UTC a sender went to 0 included while every lane still counted as live, and the log had no reject. That fits one socket blocked on the chain stream, so submits never return. A separate submit socket, plus a timeout, is the test. The block at the arm was nearly empty, about 51 in the local pool, so a short inclusion wait would also have room to show up.
 
-**Result.** The measured minute included 921, 885, and 947 a second. Together 2,753. Orphans 0. Ratio about 0.99. No lane died. Median submit was 13, 21, and 11 ms. The tail was still about 245 ms. Median lag was 0.8, 0.3, and 0.6 seconds. Local pool moved from about 2,100 to about 4,500. All three sockets stayed healthy, unlike 15:01Z, and the total is still under the 2,951 minute. Separating the chain stream did not make a socket faster than about 950 included a second. 3,500 was not reached.
+**Result.** The measured minute included 921, 885, and 947 a second. Together 2,753. Orphans 0. Ratio about 0.99. No lane died. Median submit was 13, 21, and 11 ms. The tail was still about 245 ms. Median lag was 0.8, 0.3, and 0.6 seconds. Local pool moved from about 2,100 to about 4,500. All three sockets stayed healthy, unlike 15:01 UTC, and the total is still under the 2,951 minute. Separating the chain stream did not make a socket faster than about 950 included a second. 3,500 was not reached.
 
-### 2026-10-07 15:01Z — the 2,951 shape again, then one socket went quiet
+### 2026-10-07 15:01 UTC — the 2,951 shape again, then one socket went quiet
 
 **What.** Start the same three ranges again. Fee 1,600. Depth 2. One submit socket each on the desk node. No new coins from the wallet.
 
 **Why.** 2,951 was one minute. A second minute of the same shape would show whether that number holds. The block does not have to be full for this to be worth running.
 
-**Result.** The first measured minute included 706, 936, and 986 a second. Together 2,627. The next two minutes were 2,458 and 2,236. Orphans were 0. Ratio stayed about 1. All lanes stayed up. One sender was already the slow one: its submit call took about 214 ms, against 12 to 18 ms on the other two. By 15:13Z that slow sender was at 8 a second, then at 0, with every lane still marked live and no reject line. The other two fell through about 220 to about 160 and about 57. Local mempool fell from a few thousand to the tens and the hundreds. In the same later window the desk node processed blocks at about 162,000 compute grams of 500,000, and its own virtual-chain rate was about 834 transactions a second, with about 181 a second arriving by RPC. Public pools were about 14,000 to 17,000. The 2,951 shape did not hold. A socket can go silent while its lanes still count as live. Grams were not the cap in that window. 3,500 was not reached.
+**Result.** The first measured minute included 706, 936, and 986 a second. Together 2,627. The next two minutes were 2,458 and 2,236. Orphans were 0. Ratio stayed about 1. All lanes stayed up. One sender was already the slow one: its submit call took about 214 ms, against 12 to 18 ms on the other two. By 15:13 UTC that slow sender was at 8 a second, then at 0, with every lane still marked live and no reject line. The other two fell through about 220 to about 160 and about 57. Local mempool fell from a few thousand to the tens and the hundreds. In the same later window the desk node processed blocks at about 162,000 compute grams of 500,000, and its own virtual-chain rate was about 834 transactions a second, with about 181 a second arriving by RPC. Public pools were about 14,000 to 17,000. The 2,951 shape did not hold. A socket can go silent while its lanes still count as live. Grams were not the cap in that window. 3,500 was not reached.
 
-### 2026-10-07 14:35Z — lighter hop, depth 2, lanes that were already funded
+### 2026-10-07 14:35 UTC — lighter hop, depth 2, lanes that were already funded
 
 **What.** Resume 4,096 anyone-can-spend lanes that already hold coins. Depth 2, so a lane may have two hops in flight. Submit through this desk's own synced node. Fee stays the sender's rule: 1.5 times the regular bucket, floor 150, cap 2,000. At the arm, that regular bucket read 191 and the priority bucket read 628.
 
@@ -68,7 +70,7 @@ Newest first. Each entry is one try. A number is a reading from that window.
 
 **Result.** Included 1,601 a second over the first 65 seconds, then 1,671, then 1,447. All 4,096 lanes stayed up. Orphans were 0. Ratio of included to submitted was about 1. Local mempool stayed near 1,300 to 3,300. Fee was 150 sompi per gram. Median time from submit to the virtual-chain mark on the first window was 0 ms. The submit call itself took about 310 ms. Four sockets with 128 submits in flight is 512 at once. 512 / 0.310 is about 1,650. That is the same number the run held. The block wait was not the cap. The sender's own submit queue was. The desk node used about one core while this was running, so the machine was not out of CPU.
 
-### 2026-10-07 14:43Z — same lanes, three submit queues
+### 2026-10-07 14:43 UTC — same lanes, three submit queues
 
 **What.** Stop the single sender. Split those 4,096 lanes into three ranges that do not overlap. Each sender has four sockets and 128 submits in flight. Depth 2. Same fee rule. Still no new coins from the wallet.
 
@@ -76,15 +78,15 @@ Newest first. Each entry is one try. A number is a reading from that window.
 
 **Result.** The first 15 seconds added to about 2,450 included a second. The next half minute fell to about 1,845, near 610 on each sender. A block sample in that window was full: compute mass 499,744 of 500,000, about 550 transactions in the block. Public pools were about 23,000 to 28,000. The fee on the hop was still 150 sompi per gram. Other traffic pays more than that, so a full block gives this hop a smaller share. Three queues raised the rate while the block had room, and lost the gain when the block filled.
 
-### 2026-10-07 14:48Z — same three queues, fee 1,600
+### 2026-10-07 14:48 UTC — same three queues, fee 1,600
 
 **What.** Same three lane ranges. Fee fixed at 1,600 sompi per gram, under the sender cap of 2,000, and above the 400/600 traffic already on the public nodes.
 
 **Why.** A 643 gram hop only passes 3,500 if it wins mass inside a full block. At 150 it did not. 3,500 of these hops are about 225,000 grams of a 500,000 gram block.
 
-**Result.** Fee on the arm was 1,600. Over the first measured minute the three senders included 956, 995, and 1,000 a second. Together that is 2,951. Orphans were 0. Ratio was about 0.99. Median inclusion lag was about 0.8 seconds. Each sender had one socket, not four: the extra sockets open only when a sender scans more than 2,000 lanes, and these ranges are shorter. A fourth sender on a fresh range then joined. A 23 second overlap read about 3,344 included a second, and the local pool was about 15,000. The next full minute was about 2,500. By 14:52Z the lanes had started to die and the four together were near 850, while the local pool fell by about 10,000. Public pools stayed near 16,000 to 20,000. The 2,951 minute is the best included reading of this shape so far. It is not over 3,500. The fourth sender raised the short overlap and then the set stalled.
+**Result.** Fee on the arm was 1,600. Over the first measured minute the three senders included 956, 995, and 1,000 a second. Together that is 2,951. Orphans were 0. Ratio was about 0.99. Median inclusion lag was about 0.8 seconds. Each sender had one socket, not four: the extra sockets open only when a sender scans more than 2,000 lanes, and these ranges are shorter. A fourth sender on a fresh range then joined. A 23 second overlap read about 3,344 included a second, and the local pool was about 15,000. The next full minute was about 2,500. By 14:52 UTC the lanes had started to die and the four together were near 850, while the local pool fell by about 10,000. Public pools stayed near 16,000 to 20,000. The 2,951 minute is the best included reading of this shape so far. It is not over 3,500. The fourth sender raised the short overlap and then the set stalled.
 
-### 2026-10-07 14:55Z — four senders started together, fee 1,600, one socket each
+### 2026-10-07 14:55 UTC — four senders started together, fee 1,600, one socket each
 
 **What.** Stop the stalled set. Start four non-overlapping ranges at the same time. Fee 1,600. One socket each. A lane now waits 90 seconds before it gives up, so a slow minute does not delete it.
 
@@ -92,7 +94,7 @@ Newest first. Each entry is one try. A number is a reading from that window.
 
 **Result.** The measured minute included 338, 341, 332, and 326 a second. Together 1,337. Orphans 0. Median lag about 0.8 seconds. All lanes stayed up. That is worse than the three-sender minute of 2,951. Four full senders at once crowded the node. A follow-up with two local sockets on each of three senders included about 297, 285, and 306 a second, together 888, and one lag tail reached 24 seconds. More local sockets did not raise the rate.
 
-### 2026-10-07 14:58Z — one socket on the desk node, one socket on a public node
+### 2026-10-07 14:58 UTC — one socket on the desk node, one socket on a public node
 
 **What.** Three senders again. Each keeps a socket on the desk node and opens a second socket on a different public node. Fee stays 1,600. The three public names used here are the three machines that answered, not three names on one machine.
 
@@ -102,17 +104,17 @@ Newest first. Each entry is one try. A number is a reading from that window.
 
 ## Where it stands
 
-The best included minute on this page is 2,951. Three senders, one socket each on the desk node, fee 1,600, 643 gram hops, orphans 0, for about one minute. Started again at 15:01Z, that shape included 2,627 and then one socket went quiet. With the chain stream on its own socket, three fresh ranges included 2,753 and all three stayed healthy. A fourth sender at 256 in-flight submits included 539 and pulled the other three down, and the four together were about 980. Four senders at once, earlier, fell to 1,337. Two local sockets on each sender fell to 888. A signed payment cannot be included above about 3,078 at all.
+The best included minute on this page is 2,951. Three senders, one socket each on the desk node, fee 1,600, 643 gram hops, orphans 0, for about one minute. Started again at 15:01 UTC, that shape included 2,627 and then one socket went quiet. With the chain stream on its own socket, three fresh ranges included 2,753 and all three stayed healthy. A fourth sender at 256 in-flight submits included 539 and pulled the other three down, and the four together were about 980. Four senders at once, earlier, fell to 1,337. Two local sockets on each sender fell to 888. A signed payment cannot be included above about 3,078 at all.
 
-3,500 of these hops would be about 225,000 grams of a 500,000 gram block. At 15:16Z the block was using about 162,000 of 500,000, so grams were free and the included rate was still far under 3,500. The missing piece is a submit path that stays up. One socket delivered about 1,000 included a second while it was healthy. Three sockets delivered about 3,000 for a minute. A fourth full sender made every socket slower. A socket that shares its connection with the virtual-chain stream can go silent with no reject line. The node was on about one to two cores, so the machine was not out of CPU.
+3,500 of these hops would be about 225,000 grams of a 500,000 gram block. At 15:16 UTC the block was using about 162,000 of 500,000, so grams were free and the included rate was still far under 3,500. The missing piece is a submit path that stays up. One socket delivered about 1,000 included a second while it was healthy. Three sockets delivered about 3,000 for a minute. A fourth full sender made every socket slower. A socket that shares its connection with the virtual-chain stream can go silent with no reject line. The node was on about one to two cores, so the machine was not out of CPU.
 
-### 2026-10-07 14:26Z — four signed senders, stopped at a public pool of 80,228
+### 2026-10-07 14:26 UTC — four signed senders, stopped at a public pool of 80,228
 
 **What.** Four signed senders, 3,400 coins, depth 2, fee 1,600 with a cap of 2,400, through the desk node.
 
 **Why.** More signers and a higher fee were a try at a bigger share of a full block.
 
-**Result.** Over 89 seconds the four together were seen-accepted at about 1,870 a second, 0 rejects. Each sender held about 470. That is under the two-sender minute of about 1,920 earlier the same hour, and under 2,207. A public mempool read 80,228 at 14:29:09Z and the four were stopped. The stop is a safety stop. It is not a 3,500 result. Those coin files stay spent.
+**Result.** Over 89 seconds the four together were seen-accepted at about 1,870 a second, 0 rejects. Each sender held about 470. That is under the two-sender minute of about 1,920 earlier the same hour, and under 2,207. A public mempool read 80,228 at 14:29:09 UTC and the four were stopped. The stop is a safety stop. It is not a 3,500 result. Those coin files stay spent.
 
 ### Earlier signed tries the same day
 

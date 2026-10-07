@@ -42,6 +42,14 @@ Newest first. Each entry is one try. A number is a reading from that window.
 
 **What was true on the network at the arm.** Three public pools read 15,391, 16,953, and 19,098. The desk node processed about 60 to 112 transactions per block over the minute before the arm, compute mass about 104,000 to 187,000 of 500,000. The block had room.
 
+**Result.** Included 1,601 a second over the first 65 seconds, then 1,671, then 1,447. All 4,096 lanes stayed up. Orphans were 0. Ratio of included to submitted was about 1. Local mempool stayed near 1,300 to 3,300. Fee was 150 sompi per gram. Median time from submit to the virtual-chain mark on the first window was 0 ms. The submit call itself took about 310 ms. Four sockets with 128 submits in flight is 512 at once. 512 / 0.310 is about 1,650. That is the same number the run held. The block wait was not the cap. The sender's own submit queue was. The desk node used about one core while this was running, so the machine was not out of CPU.
+
+### 2026-10-07 14:43Z — same lanes, three submit queues
+
+**What.** Stop the single sender. Split those 4,096 lanes into three ranges that do not overlap. Each sender has four sockets and 128 submits in flight. Depth 2. Same fee rule. Still no new coins from the wallet.
+
+**Why.** One sender's submit queue held the rate near 1,650. Three queues on one node are the next measurement. If the node can validate them, the included rate should add. If the node is the cap, each sender will slow down and the total will stay near 1,650.
+
 **Result.** Not written yet.
 
 ### 2026-10-07 14:26Z — four signed senders, stopped at a public pool of 80,228

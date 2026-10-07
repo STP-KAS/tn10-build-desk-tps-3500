@@ -34,6 +34,22 @@ It will not spend coins a live signer is already using. It will not start a seco
 
 Newest first. Each entry is one try. A number is a reading from that window.
 
+### 2026-10-07 15:24Z — a fourth sender with 256 submits in flight
+
+**What.** Leave the three senders from the 15:19Z minute running. Add a fourth range, fee 1,600, one submit socket, 256 submits allowed in flight instead of 128.
+
+**Why.** Each healthy socket was including about 900 a second with a submit call of about 11 to 21 ms at the median and about 245 ms at the tail. 128 in flight at a tenth of a second is about 1,000 a second, which matches the reading. A wider in-flight window on one more sender was the try for the missing 500.
+
+**Result.** The fourth sender's measured minute included 539 a second. Median submit was 19 ms. Median lag was 0.8 seconds. Orphans were 0. While it ran, the original three fell to about 340, 180, and 240. A few seconds later the four together were about 980. The fourth was stopped. The three did not climb back; they stayed near 300 each, and the local pool stayed near 9,700. 256 in flight did not raise a sender, and a fourth full sender crowded the set again. Not over 3,500.
+
+### 2026-10-07 15:19Z — chain updates on their own socket
+
+**What.** Three fresh ranges that this session had not hopped. Fee 1,600. Depth 2. The virtual-chain stream sits on its own socket. Submits sit on a second socket, one per sender. A submit that does not return in 4 seconds is treated as a dead socket and the sender reconnects.
+
+**Why.** At 15:13Z a sender went to 0 included while every lane still counted as live, and the log had no reject. That fits one socket blocked on the chain stream, so submits never return. A separate submit socket, plus a timeout, is the test. The block at the arm was nearly empty, about 51 in the local pool, so a short inclusion wait would also have room to show up.
+
+**Result.** The measured minute included 921, 885, and 947 a second. Together 2,753. Orphans 0. Ratio about 0.99. No lane died. Median submit was 13, 21, and 11 ms. The tail was still about 245 ms. Median lag was 0.8, 0.3, and 0.6 seconds. Local pool moved from about 2,100 to about 4,500. All three sockets stayed healthy, unlike 15:01Z, and the total is still under the 2,951 minute. Separating the chain stream did not make a socket faster than about 950 included a second. 3,500 was not reached.
+
 ### 2026-10-07 15:01Z — the 2,951 shape again, then one socket went quiet
 
 **What.** Start the same three ranges again. Fee 1,600. Depth 2. One submit socket each on the desk node. No new coins from the wallet.
@@ -86,7 +102,7 @@ Newest first. Each entry is one try. A number is a reading from that window.
 
 ## Where it stands
 
-The best included minute on this page is 2,951. Three senders, one socket each on the desk node, fee 1,600, 643 gram hops, orphans 0, for about one minute. Started again at 15:01Z, that shape included 2,627, then 2,458, then 2,236, and one socket then went to 0 while its lanes still counted as live. Four senders at once fell to 1,337. Two local sockets on each sender fell to 888. A signed payment cannot be included above about 3,078 at all.
+The best included minute on this page is 2,951. Three senders, one socket each on the desk node, fee 1,600, 643 gram hops, orphans 0, for about one minute. Started again at 15:01Z, that shape included 2,627 and then one socket went quiet. With the chain stream on its own socket, three fresh ranges included 2,753 and all three stayed healthy. A fourth sender at 256 in-flight submits included 539 and pulled the other three down, and the four together were about 980. Four senders at once, earlier, fell to 1,337. Two local sockets on each sender fell to 888. A signed payment cannot be included above about 3,078 at all.
 
 3,500 of these hops would be about 225,000 grams of a 500,000 gram block. At 15:16Z the block was using about 162,000 of 500,000, so grams were free and the included rate was still far under 3,500. The missing piece is a submit path that stays up. One socket delivered about 1,000 included a second while it was healthy. Three sockets delivered about 3,000 for a minute. A fourth full sender made every socket slower. A socket that shares its connection with the virtual-chain stream can go silent with no reject line. The node was on about one to two cores, so the machine was not out of CPU.
 

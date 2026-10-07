@@ -66,6 +66,14 @@ Newest first. Each entry is one try. A number is a reading from that window.
 
 **Why.** The 2,951 minute was three fresh senders. The fourth joined late, the local pool rose, and lanes then died. This try asks whether four fresh senders can add before that stall.
 
+**Result.** The measured minute included 338, 341, 332, and 326 a second. Together 1,337. Orphans 0. Median lag about 0.8 seconds. All lanes stayed up. That is worse than the three-sender minute of 2,951. Four full senders at once crowded the node. A follow-up with two local sockets on each of three senders included about 297, 285, and 306 a second, together 888, and one lag tail reached 24 seconds. More local sockets did not raise the rate.
+
+### 2026-10-07 14:58Z — one socket on the desk node, one socket on a public node
+
+**What.** Three senders again. Each keeps a socket on the desk node and opens a second socket on a different public node. Fee stays 1,600. The three public names used here are the three machines that answered, not three names on one machine.
+
+**Why.** At 2,951 included, about 38 percent of the compute mass was this hop and the block was still full. The rest of the mass was other traffic. Those blocks are built from the public mempools. A hop that only enters the desk node can lose the race even at a higher fee. Putting the same hop straight into each public mempool is the test of that.
+
 **Result.** Not written yet.
 
 ### 2026-10-07 14:26Z — four signed senders, stopped at a public pool of 80,228

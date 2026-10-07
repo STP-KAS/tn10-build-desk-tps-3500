@@ -34,6 +34,14 @@ It will not spend coins a live signer is already using. It will not start a seco
 
 Newest first. Each entry is one try. A number is a reading from that window.
 
+### 2026-10-07 15:01Z — the 2,951 shape again, then one socket went quiet
+
+**What.** Start the same three ranges again. Fee 1,600. Depth 2. One submit socket each on the desk node. No new coins from the wallet.
+
+**Why.** 2,951 was one minute. A second minute of the same shape would show whether that number holds. The block does not have to be full for this to be worth running.
+
+**Result.** The first measured minute included 706, 936, and 986 a second. Together 2,627. The next two minutes were 2,458 and 2,236. Orphans were 0. Ratio stayed about 1. All lanes stayed up. One sender was already the slow one: its submit call took about 214 ms, against 12 to 18 ms on the other two. By 15:13Z that slow sender was at 8 a second, then at 0, with every lane still marked live and no reject line. The other two fell through about 220 to about 160 and about 57. Local mempool fell from a few thousand to the tens and the hundreds. In the same later window the desk node processed blocks at about 162,000 compute grams of 500,000, and its own virtual-chain rate was about 834 transactions a second, with about 181 a second arriving by RPC. Public pools were about 14,000 to 17,000. The 2,951 shape did not hold. A socket can go silent while its lanes still count as live. Grams were not the cap in that window. 3,500 was not reached.
+
 ### 2026-10-07 14:35Z — lighter hop, depth 2, lanes that were already funded
 
 **What.** Resume 4,096 anyone-can-spend lanes that already hold coins. Depth 2, so a lane may have two hops in flight. Submit through this desk's own synced node. Fee stays the sender's rule: 1.5 times the regular bucket, floor 150, cap 2,000. At the arm, that regular bucket read 191 and the priority bucket read 628.
@@ -78,9 +86,9 @@ Newest first. Each entry is one try. A number is a reading from that window.
 
 ## Where it stands
 
-The best included minute on this page is 2,951. Three senders, one socket each on the desk node, fee 1,600, 643 gram hops, orphans 0, for about one minute. Four senders at once fell to 1,337. Two local sockets on each sender fell to 888. A signed payment cannot be included above about 3,078 at all.
+The best included minute on this page is 2,951. Three senders, one socket each on the desk node, fee 1,600, 643 gram hops, orphans 0, for about one minute. Started again at 15:01Z, that shape included 2,627, then 2,458, then 2,236, and one socket then went to 0 while its lanes still counted as live. Four senders at once fell to 1,337. Two local sockets on each sender fell to 888. A signed payment cannot be included above about 3,078 at all.
 
-3,500 of these hops would be about 225,000 grams of a 500,000 gram block. The block had room in grams. The missing piece was submits. One socket on this desk delivered about 1,000 included a second. Three sockets delivered about 3,000. A fourth full sender made every socket slower. The node was on about one to two cores while this happened, so the machine was not out of CPU. The next gain has to be a submit path that keeps a fourth socket as fast as the first three. That did not show up in these tries.
+3,500 of these hops would be about 225,000 grams of a 500,000 gram block. At 15:16Z the block was using about 162,000 of 500,000, so grams were free and the included rate was still far under 3,500. The missing piece is a submit path that stays up. One socket delivered about 1,000 included a second while it was healthy. Three sockets delivered about 3,000 for a minute. A fourth full sender made every socket slower. A socket that shares its connection with the virtual-chain stream can go silent with no reject line. The node was on about one to two cores, so the machine was not out of CPU.
 
 ### 2026-10-07 14:26Z — four signed senders, stopped at a public pool of 80,228
 

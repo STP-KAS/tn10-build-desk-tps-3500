@@ -4,6 +4,8 @@
 >
 > [Disclaimer](DISCLAIMER.md)
 
+Wording, Kaspa Pulse (@gokugalax), 7 Oct 2026: sign-and-send processes are senders; runner is the setup; bot is reserved for the operator.
+
 # Desk try for 3500 included transactions a second
 
 Kaspa Testnet-10 only. Every clock on this page is UTC.

@@ -74,7 +74,13 @@ Newest first. Each entry is one try. A number is a reading from that window.
 
 **Why.** At 2,951 included, about 38 percent of the compute mass was this hop and the block was still full. The rest of the mass was other traffic. Those blocks are built from the public mempools. A hop that only enters the desk node can lose the race even at a higher fee. Putting the same hop straight into each public mempool is the test of that.
 
-**Result.** Not written yet.
+**Result.** Two of the minutes came back at 1,094 and 1,124 included, with median lag about 0.4 seconds and the local pool falling. The third sender, on the machine that already had the larger pool, stayed weaker. A later 23 second read of all three was about 2,495. Public pools sat near 21,000. This is not over 3,500, and it is under the 2,951 minute that used only the desk node.
+
+## Where it stands
+
+The best included minute on this page is 2,951. Three senders, one socket each on the desk node, fee 1,600, 643 gram hops, orphans 0, for about one minute. Four senders at once fell to 1,337. Two local sockets on each sender fell to 888. A signed payment cannot be included above about 3,078 at all.
+
+3,500 of these hops would be about 225,000 grams of a 500,000 gram block. The block had room in grams. The missing piece was submits. One socket on this desk delivered about 1,000 included a second. Three sockets delivered about 3,000. A fourth full sender made every socket slower. The node was on about one to two cores while this happened, so the machine was not out of CPU. The next gain has to be a submit path that keeps a fourth socket as fast as the first three. That did not show up in these tries.
 
 ### 2026-10-07 14:26Z — four signed senders, stopped at a public pool of 80,228
 
